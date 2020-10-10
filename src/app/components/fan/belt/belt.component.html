@@ -1,0 +1,380 @@
+<div class=" page-inner d-flex justify-content-center">
+<div class="row">
+  <div class="col border container-fluid">
+    <div class="row  justify-content-center">
+      <ng-container *ngIf="projectWindow == true">
+      <div  class="col modal-project-list ">
+        <div class="modal-content-project-list">
+          <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Project Lists</h5>
+          <button type="button" class="close" (click) = "closeProjects()">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col py-1 px-md-2  col-4 col-md-4">
+              <div class="card  " style="width: auto;">
+                <div class="card-body">
+                  <h5 class="card-title text-center align-middle">Jobs</h5>
+                  <hr>
+                  <ul id="myUL">
+                    <li><span class="caret blockquote">Job Ref</span>
+                      <ul class="nested">
+                        <li>Water</li>
+                        <li>Coffee</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col py-1 px-md-2  col-4 col-md-4">
+              <div class="card align-middle text-center" style="width: auto;">
+                <div class="card-body">
+                  <h5 class="card-title">Selections</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col py-1 px-md-2  col-4 col-md-4">
+              <div class="card align-middle text-center" style="width: auto;">
+                <div class="card-body">
+                  <h5 class="card-title">Project Details</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      </ng-container>
+      <div class="col">
+        <div class="row text-white" color="primary">
+          <div class="col py-2 px-md-4 col-10 col-md-10 mx-auto"><h4>Belt Drive Designer</h4></div>
+          <div class="col py-2 px-md-4  col-2 col-md-2 mx-auto"><button type="button" class="btn btn-outline-light btn-block" (click) = openProjects()>View Projects</button></div>
+        </div>
+        <mat-divider></mat-divider>
+        <!-- <div class="row">
+          <ng-container *ngIf="newProjectDetails == null">
+          <div class="col py-3 px-md-5 border-bottom col-12 col-md-12 mx-auto">
+            <form #projectInfoForm = "ngForm" (ngSubmit)="projectDetails(projectInfoForm.value);">
+              <div class="row">
+                <div class="col-3">
+                  <div class="form-group">
+                    <label for="projectName">Project Name</label>
+                    <input type="text" [(ngModel)]="projectName" name="projectName" id="projectName" class="form-control" required>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="jobRef">Job Ref</label>
+                    <input type="number" [(ngModel)]="jobRef" name="jobRef" id="jobRef" class="form-control"  required>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="selectionDate">Selection Date</label>
+                    <input type="date" [(ngModel)]="selectionDate" name="selectionDate" id="selectionDate" class="form-control" value="{{selectionDate | date}}"  required>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="serialNum">Serial No.</label>
+                    <input type="number" [(ngModel)]="serialNum" name="serialNum" id="serialNum" class="form-control"  required>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="revNum">Revision No.</label>
+                    <input type="number" [(ngModel)]="revNum" name="revNum" id="revNum" class="form-control" required>
+                  </div>
+                </div>
+                <div class="col-1">
+                  <div class="form-group">
+                    <label></label>
+                  <button type="submit" class="btn btn-outline-primary btn-block"><i class="fas fa-plus"></i></button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="newProjectDetails != null">
+          <div class="col py-3 px-md-5 border-bottom col-12 col-md-12 mx-auto">
+              <div class="row">
+                <div class="col-3">
+                  <div class="form-group">
+                    <label for="projectName">Project Name</label>
+                    <h5>{{newProjectDetails.projectName}}</h5>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="jobRef">Job Ref</label><h5>{{newProjectDetails.jobRef}}</h5>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="selectionDate">Selection Date</label><h5>{{newProjectDetails.selectionDate | date}}</h5>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="serialNum">Serial No.</label><h5>{{newProjectDetails.serialNum}}</h5>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="revNum">Revision No.</label><h5>{{newProjectDetails.revNum}}</h5>
+                  </div>
+                </div>
+                <div class="col-1">
+                  <div class="form-group">
+                    <label></label>
+                  <button type="button" class="btn btn-outline-primary btn-block"><i class="far fa-edit"></i></button>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </ng-container>
+        </div> -->
+        <form #beltCalcForm = "ngForm" (ngSubmit)="calculate(beltCalcForm.value)">
+        <div class="row">
+          <div class="col py-1 px-md-2  col-6 col-md-6">
+            <mat-card class="align-middle text-center" style="width: auto;">
+                  <h5 class="card-title text-center">Fan Orientation - {{selected_FanOrientation.text}}</h5>
+              <div class="cc-selector">
+                <ul class="list-inline" >
+                  <li class="list-inline-item" *ngFor="let item of fanOrientations"><input type="radio" [(ngModel)]="fanOrientaion"  name="fanOrientation" id="{{item.code}}"  [value]="item.value" (change)= 'selectedFanOrientation(item)' [checked]="item.value" required>
+                    <label class="drinkcard-cc {{item.code}}" for="{{item.code}}"></label></li>
+                </ul>
+              </div>
+            </mat-card>
+          </div>
+          <div class="col py-1 px-md-2  col-6 col-md-6">
+            <mat-card class="align-middle text-center" style="width: auto;">
+              <h5 class="card-title">Motor Position for {{selected_FanOrientation.text}} - {{selected_motorPosition.text}}</h5>
+              <div class="cc-selector-motor">
+                <ul class="list-inline" >
+                  <li class="list-inline-item" *ngFor="let item of motorPositions"><input type="radio" [(ngModel)]="motorPosition"  name="motorPosition" id="{{item.code}}"  [value]="item.value" (change)= 'selectedMotorPosition(item)' [checked]="item.value" required>
+                    <label class="drinkcard-cc-motor {{item.code}}" for="{{item.code}}"></label></li>
+                </ul>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+        <div class="row justify-content-center text-center">
+          <div class="col py-1 px-md-2  col-12 col-md-12">
+            <div class="row">
+              <div class="col-md-3">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>AHU Tag</mat-label>
+                  <input type="text" [(ngModel)]="ahuTag" name="ahuTag" id="ahuTag" matInput required>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Fan Model</mat-label>
+                  <mat-select [(ngModel)]="fanModel" name="fanModel"  placeholder="Fan Model" #singleSelect (selectionChange) = 'getFanData()' required>
+                    <mat-option>
+                      <ngx-mat-select-search *ngIf="true" [formControl]="fanModelFiltrCtrl" [preventHomeEndKeyPropagation]="true">
+                        <mat-icon ngxMatSelectSearchClear>delete</mat-icon>
+                      </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let item of filteredfanModel | async" [value]="item.FAN_SIZE">
+                      {{item.FAN_SIZE}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Fan Speed (RPM)</mat-label>
+                  <input type="number" [(ngModel)]="fanSpeed" name="fanSpeed" id="fanSpeed" matInput required>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                  <mat-label>Fan Pulley</mat-label>
+                  <mat-select [(ngModel)]="fanPulley" name="fanPulley"  placeholder="Fan Pulley" #singleSelect (selectionChange) = 'getFanPulleyData()' required>
+                    <mat-option>
+                      <ngx-mat-select-search *ngIf="true" [formControl]="PulleyFiltrCtrl" [preventHomeEndKeyPropagation]="true">
+                        <mat-icon ngxMatSelectSearchClear>delete</mat-icon>
+                      </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let item of filteredpulley | async" [value]="item.CODE">
+                      {{item.CODE}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                  <mat-label>Motor Model</mat-label>
+                  <mat-select [(ngModel)]="motorModel" name="motorModel"  placeholder="Motor Model" #singleSelect (selectionChange) = 'getMotorData()' required>
+                    <mat-option>
+                      <ngx-mat-select-search *ngIf="true" [formControl]="motorModelFiltrCtrl" [preventHomeEndKeyPropagation]="true">
+                        <mat-icon ngxMatSelectSearchClear>delete</mat-icon>
+                      </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let item of filteredMotorModel | async" [value]="item.FRAMESIZE">
+                      {{item.FRAMESIZE}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Motor Speed (RPM)</mat-label>
+                    <input type="number" [(ngModel)]="motorSpeed" name="motorSpeed" id="motorSpeed" matInput required>
+                  </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                  <mat-label>Motor Pulley</mat-label>
+                  <mat-select [(ngModel)]="motorPulley" name="motorPulley"  placeholder="Motor Pulley" #singleSelect (selectionChange) = 'getMotorPulleyData()' required>
+                    <mat-option>
+                      <ngx-mat-select-search *ngIf="true" [formControl]="PulleyFiltrCtrl" [preventHomeEndKeyPropagation]="true">
+                        <mat-icon ngxMatSelectSearchClear>delete</mat-icon>
+                      </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let item of filteredpulley | async" [value]="item.CODE">
+                      {{item.CODE}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+
+                <button type="submit" class="btn-lg" [disabled] = '!beltCalcForm.valid' mat-raised-button color="primary">Calculate</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        </form>
+        <ng-container *ngIf="result">
+          <div class="row" >
+            <div class="col py-1 px-md-2  col-12 col-md-12">
+
+            <mat-card class="align-middle text-center" style="width: auto;">
+                  <ng-container *ngIf="loading == true">
+                  <div class="loading">
+                    <div class="bounceball"></div>
+                    <div class="textLoading"> CALCULATING</div>
+                  </div>
+                  </ng-container>
+                  <div class="row">
+                    <div class="col-12">
+                      <mat-grid-list cols="4" rowHeight="4:1" gutterSize="2" >
+                        <mat-grid-tile-header >
+                          <cite>Result : </cite> <span >{{result.ahuTag}}</span></mat-grid-tile-header>
+                        <mat-grid-tile>
+                          <mat-card-header>
+                            <mat-card-subtitle><cite>Fan Model</cite></mat-card-subtitle>
+                            <mat-card-title>{{result.fanModel}} &#8960;</mat-card-title>
+                          </mat-card-header>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                          <mat-card-header>
+                            <mat-card-subtitle><cite>Motor Model</cite></mat-card-subtitle>
+                            <mat-card-title>{{result.motorModel}}</mat-card-title>
+                          </mat-card-header>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                          <mat-card-header>
+                            <mat-card-subtitle><cite>Fan Speed</cite></mat-card-subtitle>
+                            <mat-card-title>{{result.fanSpeed}} RPM</mat-card-title>
+                          </mat-card-header>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                          <mat-card-header>
+                            <mat-card-subtitle><cite>Motor Speed</cite></mat-card-subtitle>
+                            <mat-card-title>{{result.motorSpeed}} RPM</mat-card-title>
+                          </mat-card-header>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                          <mat-card-header>
+                            <mat-card-subtitle><cite>Fan Pulley</cite></mat-card-subtitle>
+                            <mat-card-title>{{result.fanPulley}}</mat-card-title>
+                          </mat-card-header>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                          <mat-card-header>
+                            <mat-card-subtitle><cite>Motor Pulley</cite></mat-card-subtitle>
+                            <mat-card-title>{{result.motorPulley}}</mat-card-title>
+                          </mat-card-header>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                          <mat-card-header>
+                            <mat-card-subtitle><cite>Center Distance</cite></mat-card-subtitle>
+                            <mat-card-title>{{result.centerDistance}} mm</mat-card-title>
+                          </mat-card-header>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                          <mat-card-header>
+                            <mat-card-subtitle><cite>Belt Length</cite></mat-card-subtitle>
+                            <mat-card-title>{{result.beltLength}} mm</mat-card-title>
+                          </mat-card-header>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                          <mat-card-header>
+                            <mat-card-subtitle><cite>Matching Belts</cite></mat-card-subtitle>
+                            <mat-card-title><mat-button-toggle-group appearance="legacy" [(ngModel)]="matchingBelts" name="matchingBelts" id="matchingBelts" *ngIf="belts[0] != undefined">
+                              <mat-button-toggle *ngFor="let item of belts" [value]= 'item.ID' >{{item.Grade}}-{{item.Length}}</mat-button-toggle>
+                            </mat-button-toggle-group>
+                            <mat-button-toggle-group appearance="legacy" [(ngModel)]="matchingBelts" name="matchingBelts" id="matchingBelts" *ngIf="belts[0] == undefined">
+                              <mat-button-toggle  [value]= 'belts[1].ID' >{{belts[1].Grade}}-{{belts[1].Length}}</mat-button-toggle>
+                            </mat-button-toggle-group>
+                          </mat-card-title>
+                          </mat-card-header>
+                          </mat-grid-tile>
+                        <mat-grid-tile>
+                          <mat-card-header>
+                            <mat-card-subtitle><cite>No. of Belts</cite></mat-card-subtitle>
+                            <mat-card-title>{{result.beltQty}} nos</mat-card-title>
+                          </mat-card-header>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                          <mat-card-header>
+                            <mat-card-subtitle><cite>Fan Orientation</cite></mat-card-subtitle>
+                            <mat-card-title>{{result.fanOrientaionText}}</mat-card-title>
+                          </mat-card-header>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                          <mat-card-header>
+                            <mat-card-subtitle><cite>Motor Position</cite></mat-card-subtitle>
+                            <mat-card-title>{{result.motorPositionText}}</mat-card-title>
+                          </mat-card-header>
+                        </mat-grid-tile>
+                      </mat-grid-list>
+                    </div>
+                  </div>
+              </mat-card>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="result == null">
+          <div class="row" >
+            <div class="col py-1 px-md-2  col-12 col-md-12">
+            <mat-card class="align-middle text-center" style="width: auto;">
+              <ng-container *ngIf="loading == true">
+                <div class="loading">
+                  <div class="bounceball"></div>
+                  <div class="textLoading"> CALCULATING</div>
+                </div>
+                </ng-container>
+                <h6 class="card-title text-danger">{{noresult}}</h6>
+            </mat-card>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+</div>
+</div>
+</div>

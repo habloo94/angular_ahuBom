@@ -1,0 +1,14 @@
+<mat-toolbar color="primary">
+  <div class="row">
+    <div class="col-8">
+      <h4 class="mt-1">Air Handling Unit Selection Tools</h4>
+    </div>
+    <div class="col-4 text-right">
+
+      <a mat-raised-button [routerLink]="['/bom']" color="accent" class="mx-1">BOM</a>
+      <a mat-raised-button [routerLink]="['/fan']" color="accent" class="mx-1">Fan</a>
+    </div>
+  </div>
+</mat-toolbar>
+<router-outlet></router-outlet>
+

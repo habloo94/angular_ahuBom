@@ -1,0 +1,761 @@
+<div class="page-inner-bom d-flex justify-content-center" style="overflow-x: auto;">
+  <form class="form-horizontal" [formGroup]="ahuSpec" >
+  <div class="row mx-3">
+    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 container-fluid justify-content-center">
+      <mat-card>
+
+        <h5 class="text-center mt-1 mb-2">Project Details</h5>
+        <mat-divider></mat-divider>
+        <div class="row ">
+          <div class="col container-fluid mt-2">
+            <div class="row text-center">
+
+              <mat-form-field appearance="outline" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                style="width:100% !important;">
+                <mat-label>Customer</mat-label>
+                <input type="text" formControlName="customer" matInput required>
+              </mat-form-field>
+
+
+              <mat-form-field appearance="outline" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                style="width:100% !important;">
+                <mat-label>Project Name</mat-label>
+                <input type="text" formControlName="project" matInput required>
+              </mat-form-field>
+
+
+              <mat-form-field appearance="outline" class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                <mat-label>Sale Order#</mat-label>
+                <input type="number" formControlName="so_num" matInput required>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                <mat-label>Location</mat-label>
+                <input type="text" formControlName="location" matInput required>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                <mat-label>AHU Model</mat-label>
+                <input type="text" formControlName="ahuModel" matInput required>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                <mat-label>AHU Type</mat-label>
+                <input type="text" formControlName="ahuType" matInput required>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                <mat-label>AHU Tag</mat-label>
+                <input type="text" formControlName="ahuTag" matInput required>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <mat-label>Quantity</mat-label>
+                <input type="number" formControlName="ahuQty" matInput required>
+              </mat-form-field>
+              <!-- <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+              <button mat-flat-button color="primary"  type="submit">Save</button></div> -->
+              <!-- <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+              <button mat-flat-button color="accent" type="submit" >Generate BOM</button></div> -->
+              <!-- (click) = "exportTable();" -->
+            </div>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 container-fluid justify-content-center">
+      <mat-card>
+        <div class="row" class="overflow-auto">
+          <div class="col-12">
+
+<!-- 
+            <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+            {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+          </button> -->
+
+          <!-- <div>
+                  <button mat-button matStepperNext>Next</button>
+                </div> -->
+          <mat-horizontal-stepper [linear]="isLinear" #stepper (selectionChange)="stepChanged($event, stepper);">
+
+            <mat-step [stepControl]="unitForm" label="Unit">
+              <form formGroupName="unitForm">
+                    <div class="container-fluid justify-content-center border mt-3"
+                      style="border-color: darkgray; border-radius: 0.5em;">
+                      <h5 class="text-center">Capacity & Construction</h5>
+                      <mat-divider></mat-divider>
+                      <div class="row mt-4 text-center justify-content-center">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                          <div class="row">
+                            <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                              <mat-label>Air Volume</mat-label>
+                              <input type="number" matInput formControlName="airVolume" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                              <mat-label>ESP</mat-label>
+                              <input type="number" matInput formControlName="ESP" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                              <mat-label>Profile Type</mat-label>
+                              <mat-select formControlName="profileType" #singleSelect>
+                                <mat-option>
+                                  <ngx-mat-select-search *ngIf="true" [formControl]="profileTypeFiltrCtrl" [preventHomeEndKeyPropagation]="true" placeholderLabel="Search by Name or Code"
+                                  noEntriesFoundLabel="'no matching data'">
+                                  <mat-icon ngxMatSelectSearchClear>remove</mat-icon>
+                                  </ngx-mat-select-search>
+                                </mat-option>
+                                <mat-option *ngFor="let item of fltr_profileType | async" [value]="item" title="{{item.Name}}">
+                                  {{item.Description}}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                              <mat-label>Panel Thickness</mat-label>
+                              <mat-select formControlName="panelThick">
+                                <mat-option  [value]="50">50 mm</mat-option>
+                                <mat-option  [value]="48">48 mm</mat-option>
+                                <mat-option  [value]="45">45 mm</mat-option>
+                                <mat-option  [value]="30">30 mm</mat-option>
+                                <mat-option  [value]="25">45 mm</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                          <div class="row">
+                          <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                            <mat-label>Outer Sheet</mat-label>
+                            <mat-select formControlName="outerSheet" #singleSelect>
+                              <mat-option>
+                                <ngx-mat-select-search *ngIf="true" [formControl]="giSheetsOuterFiltrCtrl" [preventHomeEndKeyPropagation]="true" placeholderLabel="Search by Name or Code"
+                                noEntriesFoundLabel="'no matching data'">
+                                <mat-icon ngxMatSelectSearchClear>remove</mat-icon>
+                                </ngx-mat-select-search>
+                              </mat-option>
+                              <mat-option *ngFor="let item of fltr_giSheets | async" data-keyword="item.Code" [value]="item" title="{{item.Name}}">
+                                {{item.Name}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                            <mat-label>Inner Sheet</mat-label>
+                            <mat-select formControlName="innerSheet" #singleSelect >
+                              <mat-option>
+                                <ngx-mat-select-search *ngIf="true" [formControl]="giSheetsInnerFiltrCtrl" [preventHomeEndKeyPropagation]="true" placeholderLabel="Search by Name or Code"
+                                noEntriesFoundLabel="'no matching data'">
+                                <mat-icon ngxMatSelectSearchClear >remove</mat-icon>
+                                </ngx-mat-select-search>
+                              </mat-option>
+                              <mat-option *ngFor="let item of fltr_giSheets | async" data-keyword="item.Code" [value]="item" title="{{item.Name}}">
+                                {{item.Name}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                            <mat-label>Insulation</mat-label>
+                            <mat-select formControlName="insulation">
+                              <mat-option  value="PUF">Poly Urethene Foam</mat-option>
+                              <mat-option  value="Rockwool">Rockwool</mat-option>
+                              <mat-option  value="Glass Fiber">Glass Fiber</mat-option>
+                              <mat-option  value="Nitrile Rubber">Nitrile Rubber</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                            <mat-label>Unit Base Type</mat-label>
+                            <mat-select formControlName="baseType">
+                              <mat-option  value="MS Fabricated">MS Fabricated</mat-option>
+                              <mat-option  value="MS Channel">MS Channel</mat-option>
+                              <mat-option  value="SS Fabricated">SS Fabricated</mat-option>
+                              <mat-option  value="SS Channel">SS Channel</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                            <mat-label>Unit Base Height</mat-label>
+                            <mat-select formControlName="baseHeight">
+                              <mat-option  value="30">30 mm</mat-option>
+                              <mat-option  value="50">50 mm</mat-option>
+                              <mat-option  value="80">80 mm</mat-option>
+                              <mat-option  value="100">100 mm</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                            <mat-label>Base Thick</mat-label>
+                            <mat-select formControlName="baseThick">
+                              <mat-option  value="3">3 mm</mat-option>
+                              <mat-option  value="4">4 mm</mat-option>
+                              <mat-option  value="5">5 mm</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="container-fluid justify-content-center border mt-3"
+                      style="border-color: darkgray; border-radius: 0.5em;">
+                      <h5 class="text-center">Dimension</h5>
+                      <mat-divider></mat-divider>
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div class="row ">
+                            <div class="col-6 col-sm-6 justify-content-center border-right">
+                              <div class="row mt-1 mb-0 border-bottom">
+                                <div class="col-xs-6 col-sm-6 col-md-9 col-lg-9">
+                                  <h6>Supply</h6>
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-right">
+                                  <a mat-icon-button color="primary" aria-label="Add Supply Section"
+                                    (click)="addSupplySectionFormGroupClick()">
+                                    <mat-icon>add</mat-icon>
+                                </a></div>
+                              </div>
+                              <div formArrayName="supplyDimension"
+                                *ngFor="let supplyDimension of ahuSpec.controls.unitForm.get('supplyDimension')['controls']; let i = index">
+                                <div [formGroupName]="i" class="row">
+                                  <div><cite>Section {{i+1}}</cite><a mat-icon-button color="primary" class="float-right" aria-label="Add Supply Section"
+                                    (click)="removeSupplySectionFormGroupClick(i)">
+                                    <mat-icon>delete</mat-icon>
+                                  </a></div>
+                                  <mat-form-field appearance="outline" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                    <mat-label>Length (mm)</mat-label>
+                                    <input type="number" formControlName="length" matInput required>
+                                  </mat-form-field>
+                                  <mat-form-field appearance="outline" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                    <mat-label>Width (mm)</mat-label>
+                                    <input type="number" formControlName="width" matInput required>
+                                  </mat-form-field>
+                                  <mat-form-field appearance="outline" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                    <mat-label>Height (mm)</mat-label>
+                                    <input type="number" formControlName="height" matInput required>
+                                  </mat-form-field>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-6 col-sm-6 justify-content-center">
+                              <div class="row mt-1 mb-0 border-bottom">
+                                <div class="col-xs-6 col-sm-6 col-md-9 col-lg-9">
+                                  <h6>Exhaust</h6>
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-right">
+                                  <a mat-icon-button color="primary" aria-label="Add Supply Section"
+                                    (click)="addExhaustSectionFormGroupClick()">
+                                    <mat-icon>add</mat-icon>
+                                </a></div>
+                              </div>
+                              <div formArrayName="exhaustDimension"
+                                *ngFor="let supplyDimension of ahuSpec.controls.unitForm.get('exhaustDimension')['controls']; let i = index">
+                                <div [formGroupName]="i" class="row">
+                                  <div><cite>Section {{i+1}}</cite><a mat-icon-button color="primary" class="float-right" aria-label="Add Supply Section"
+                                    (click)="removeExhaustSectionFormGroupClick(i)">
+                                    <mat-icon>delete</mat-icon>
+                                  </a></div>
+                                  <mat-form-field appearance="outline" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                    <mat-label>Length (mm)</mat-label>
+                                    <input type="number" formControlName="length" matInput required>
+                                  </mat-form-field>
+                                  <mat-form-field appearance="outline" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                    <mat-label>Width (mm)</mat-label>
+                                    <input type="number" formControlName="width" matInput required>
+                                  </mat-form-field>
+                                  <mat-form-field appearance="outline" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                    <mat-label>Height (mm)</mat-label>
+                                    <input type="number" formControlName="height" matInput required>
+                                  </mat-form-field>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <div class="f-r mt-3">
+                    <button [disabled]="ahuSpec.get('unitForm').invalid ||
+                                        ahuSpec.get('customer').invalid || 
+                                        ahuSpec.get('project').invalid ||
+                                        ahuSpec.get('so_num').invalid ||
+                                        ahuSpec.get('location').invalid ||
+                                        ahuSpec.get('ahuModel').invalid ||
+                                        ahuSpec.get('ahuType').invalid ||
+                                        ahuSpec.get('ahuTag').invalid ||
+                                        ahuSpec.get('ahuQty').invalid"  mat-flat-button color="accent" mat-button matStepperNext>Next</button>
+
+                  </div>
+              </form>
+                  
+            </mat-step>
+
+            <mat-step [stepControl]="fanForm" label="Fan">
+              
+              <form formGroupName="fanForm" >
+                <div class="container-fluid justify-content-center  mt-3"
+                    style="border-color: darkgray; border-radius: 0.5em;" >
+                <div class="row text-center justify-content-center border"  >
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 border-right">
+                        <h5 class="text-center">Supply Air Fan</h5>
+                        <mat-divider></mat-divider>
+                        <div class="row mt-4" formGroupName="supplyFan">
+                        <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                          <mat-label>Fan Model</mat-label>
+                          <mat-select formControlName="fanModel">
+                            <mat-option>
+                              <ngx-mat-select-search *ngIf="true" [formControl]="supplyFanFiltrCtrl" [preventHomeEndKeyPropagation]="true" placeholderLabel="Search by Name or Code"
+                              noEntriesFoundLabel="'no matching data'">
+                              <mat-icon ngxMatSelectSearchClear>remove</mat-icon>
+                              </ngx-mat-select-search>
+                            </mat-option>
+                            <mat-option *ngFor="let item of fltr_fan | async" [value]="item" title="{{item.Name}}">
+                              {{item.Name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                          <mat-label>Fan Qty</mat-label>
+                          <input type="number" formControlName="fanQty" matInput required>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4" >
+                          <mat-label>Motor Model</mat-label>
+                          <mat-select formControlName="motorModel"  [disabled] ="selectedSupplyFanModel.value.Brand == 'Ziehl Abegg' ? true : false">
+                            <mat-option>
+                              <ngx-mat-select-search *ngIf="true" [formControl]="supplyMotorFiltrCtrl" [preventHomeEndKeyPropagation]="true" placeholderLabel="Search by Name or Code"
+                              noEntriesFoundLabel="'no matching data'">
+                              <mat-icon ngxMatSelectSearchClear>remove</mat-icon>
+                              </ngx-mat-select-search>
+                            </mat-option>
+                            <mat-option *ngFor="let item of fltr_motor | async" [value]="item" title="{{item.Name}}">
+                              {{item.Name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                          <mat-label>Motor Qty</mat-label>
+                          <input type="number" formControlName="motorQty" matInput required>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                          <mat-label>Total Qty</mat-label>
+                          <input type="number" formControlName="totalQty" matInput required>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                          <mat-label>Anti Vibrant</mat-label>
+                          <mat-select formControlName="antiVibrant">
+                            <mat-option *ngFor="let item of antiVibrant" [value]="item">
+                              {{item.Name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                          <mat-label>Fan Pulley</mat-label>
+                          <mat-select formControlName="fanPulley">
+                            <mat-option>
+                              <ngx-mat-select-search *ngIf="true" [formControl]="supplyFanPulleyFiltrCtrl" [preventHomeEndKeyPropagation]="true" placeholderLabel="Search by Name or Code"
+                              noEntriesFoundLabel="'no matching data'">
+                              <mat-icon ngxMatSelectSearchClear>remove</mat-icon>
+                              </ngx-mat-select-search>
+                            </mat-option>
+                            <mat-option *ngFor="let item of fltr_pulley | async" [value]="item" title="{{item.Name}}">
+                              {{item.Name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                          <mat-label>Motor Pulley</mat-label>
+                          <mat-select formControlName="motorPulley">
+                            <mat-option>
+                              <ngx-mat-select-search *ngIf="true" [formControl]="supplyMotorPulleyFiltrCtrl" [preventHomeEndKeyPropagation]="true" placeholderLabel="Search by Name or Code"
+                              noEntriesFoundLabel="'no matching data'">
+                              <mat-icon ngxMatSelectSearchClear>remove</mat-icon>
+                              </ngx-mat-select-search>
+                            </mat-option>
+                            <mat-option *ngFor="let item of fltr_pulley | async" [value]="item" title="{{item.Name}}">
+                              {{item.Name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                          <mat-label>Belt</mat-label>
+                          <mat-select formControlName="belt">
+                            <mat-option>
+                              <ngx-mat-select-search *ngIf="true" [formControl]="supplyBeltFiltrCtrl" [preventHomeEndKeyPropagation]="true" placeholderLabel="Search by Name or Code"
+                              noEntriesFoundLabel="'no matching data'">
+                              <mat-icon ngxMatSelectSearchClear>remove</mat-icon>
+                              </ngx-mat-select-search>
+                            </mat-option>
+                            <mat-option *ngFor="let item of fltr_belt | async" [value]="item" title="{{item.Name}}">
+                              {{item.Name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <h5 class="text-center">Exhaust Air Fan</h5>
+                        <mat-divider></mat-divider>
+                        <div class="row mt-4" formGroupName="exhaustFan">
+                          <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                            <mat-label>Fan Model</mat-label>
+                            <mat-select formControlName="fanModel">
+                              <mat-option>
+                                <ngx-mat-select-search *ngIf="true" [formControl]="exhaustFanFiltrCtrl" [preventHomeEndKeyPropagation]="true" placeholderLabel="Search by Name or Code"
+                                noEntriesFoundLabel="'no matching data'">
+                                <mat-icon ngxMatSelectSearchClear>remove</mat-icon>
+                                </ngx-mat-select-search>
+                              </mat-option>
+                              <mat-option *ngFor="let item of fltr_fan | async" [value]="item" title="{{item.Name}}">
+                                {{item.Name}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                            <mat-label>Fan Qty</mat-label>
+                            <input type="number" formControlName="fanQty" matInput required>
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                            <mat-label>Motor Model</mat-label>
+                            <mat-select formControlName="motorModel"  [disabled] ="selectedExhaustFanModel.value.Brand == 'Ziehl Abegg' ? true : false">
+                              <mat-option>
+                                <ngx-mat-select-search *ngIf="true" [formControl]="supplyMotorFiltrCtrl" [preventHomeEndKeyPropagation]="true" placeholderLabel="Search by Name or Code"
+                                noEntriesFoundLabel="'no matching data'">
+                                <mat-icon ngxMatSelectSearchClear>remove</mat-icon>
+                                </ngx-mat-select-search>
+                              </mat-option>
+                              <mat-option *ngFor="let item of fltr_motor | async" [value]="item" title="{{item.Name}}">
+                                {{item.Name}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                            <mat-label>Motor Qty</mat-label>
+                            <input type="number" formControlName="motorQty" matInput required>
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                            <mat-label>Total Qty</mat-label>
+                            <input type="number" formControlName="totalQty" matInput required>
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                            <mat-label>Anti Vibrant</mat-label>
+                            <mat-select formControlName="antiVibrant">
+                              <mat-option *ngFor="let item of antiVibrant" [value]="item">
+                                {{item.Name}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                            <mat-label>Fan Pulley</mat-label>
+                            <mat-select formControlName="fanPulley">
+                              <mat-option>
+                                <ngx-mat-select-search *ngIf="true" [formControl]="exhaustFanPulleyFiltrCtrl" [preventHomeEndKeyPropagation]="true" placeholderLabel="Search by Name or Code"
+                                noEntriesFoundLabel="'no matching data'">
+                                <mat-icon ngxMatSelectSearchClear>remove</mat-icon>
+                                </ngx-mat-select-search>
+                              </mat-option>
+                              <mat-option *ngFor="let item of fltr_pulley | async" [value]="item" title="{{item.Name}}">
+                                {{item.Name}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                            <mat-label>Motor Pulley</mat-label>
+                            <mat-select formControlName="motorPulley">
+                              <mat-option>
+                                <ngx-mat-select-search *ngIf="true" [formControl]="exhaustMotorPulleyFiltrCtrl" [preventHomeEndKeyPropagation]="true" placeholderLabel="Search by Name or Code"
+                                noEntriesFoundLabel="'no matching data'">
+                                <mat-icon ngxMatSelectSearchClear>remove</mat-icon>
+                                </ngx-mat-select-search>
+                              </mat-option>
+                              <mat-option *ngFor="let item of fltr_pulley | async" [value]="item" title="{{item.Name}}">
+                                {{item.Name}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                            <mat-label>Belt</mat-label>
+                            <mat-select formControlName="belt">
+                              <mat-option>
+                                <ngx-mat-select-search *ngIf="true" [formControl]="exhaustBeltFiltrCtrl" [preventHomeEndKeyPropagation]="true" placeholderLabel="Search by Name or Code"
+                                noEntriesFoundLabel="'no matching data'">
+                                <mat-icon ngxMatSelectSearchClear>remove</mat-icon>
+                                </ngx-mat-select-search>
+                              </mat-option>
+                              <mat-option *ngFor="let item of fltr_belt | async" [value]="item" title="{{item.Name}}">
+                                {{item.Name}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          </div>
+                </div>
+
+
+              </div>
+
+              </div>
+              <div class="mt-3 f-r">
+                  <button mat-flat-button color="accent" class="mr-3" mat-button matStepperPrevious>Back</button>
+                  <button [disabled]="ahuSpec.get('fanForm').invalid" mat-flat-button color="accent" mat-button matStepperNext>Next</button>
+              </div>
+               
+              
+              </form>
+
+           
+            </mat-step>
+
+            <mat-step [stepControl]="coilForm" label="Coil">
+               <form formGroupName="coilForm">
+              <div class="container-fluid justify-content-center border mt-3"
+                    style="border-color: darkgray; border-radius: 0.5em;">
+                      <div class="mt-2"><span class="text-left">Coils</span>
+                      <a mat-raised-button color="primary" aria-label="Add Supply Section" class="float-right" (click)="addCoilFormGroupClick();">
+                        Add Coil
+                      </a></div>
+                     
+                        <div formArrayName="coils"
+                        *ngFor="let coils of ahuSpec.controls.coilForm.get('coils')['controls']; let i = index">
+                    <div class="row mb-1 mt-3 justify-content-center" [formGroupName]="i"  >
+                      <h5 class="text-center">{{i+1}}<span *ngIf="i+1 == 1"><sup>st</sup></span>
+                        <span *ngIf="i+1 == 2"><sup>nd</sup></span>
+                        <span *ngIf="i+1 == 3"><sup>rd</sup></span>
+                        <span *ngIf="i+1 > 3"><sup>th</sup></span>
+                        Coil</h5>
+
+                      <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 border-right border">
+                        <p class="text-center mt-3">Specification</p>
+                      <mat-divider></mat-divider>
+                        <div class="row mt-4 text-center">
+                            <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                            <mat-label>Coil Type</mat-label>
+                            <mat-select formControlName="coilType">
+                              <mat-option *ngFor="let item of coil" [value]="item">
+                                {{item.Name}}
+                              </mat-option>
+                            </mat-select>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                              <mat-label>Fin Height</mat-label>
+                              <input type="number" formControlName="finHeight" matInput required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                              <mat-label>Fin Length</mat-label>
+                              <input type="number" formControlName="finLength" matInput required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                              <mat-label>Row Deep</mat-label>
+                              <input type="number" formControlName="rowDeep" matInput required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                              <mat-label>FPI</mat-label>
+                              <input type="number" formControlName="fpi" matInput required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                              <mat-label>Circuit</mat-label>
+                              <input type="number" formControlName="circuit" matInput required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                              <mat-label>Tube Dia</mat-label>
+                              <mat-select formControlName="tubeDia">
+                                <!-- <mat-option *ngFor="let food of foods" [value]="food.value">
+                                  {{food.viewValue}}
+                                </mat-option> -->
+                                <mat-option value="1/2">1/2 inch</mat-option>
+                                <mat-option value="5/8">5/8 inch</mat-option>
+                                <mat-option value="3/8">3/8 inch (IGT)</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                              <mat-label>Fin Material</mat-label>
+                              <mat-select formControlName="finMaterial">
+                                <mat-option *ngFor="let item of coilFin" [value]="item">
+                                  {{item.Name}}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                              <mat-label>Tube Material</mat-label>
+                              <mat-select formControlName="tubeMaterial">
+                                <!-- <mat-option *ngFor="let food of foods" [value]="food.value">
+                                  {{food.viewValue}}
+                                </mat-option> -->
+
+                                <mat-option value="Copper">Copper</mat-option>
+                                <mat-option value="Stainless Steel">Stainless Steel</mat-option>
+                                <mat-option value="Aluminium">Aluminium</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                              <mat-label>Header Material</mat-label>
+                              <mat-select formControlName="headerMaterial">
+                                <!-- <mat-option *ngFor="let food of foods" [value]="food.value">
+                                  {{food.viewValue}}
+                                </mat-option> -->
+                                <mat-option value="Mild Steel">Mild Steel</mat-option>
+                                <mat-option value="Copper">Copper</mat-option>
+                                <mat-option value="Stainless Steel">Stainless Steel</mat-option>
+                                <mat-option value="Aluminium">Aluminium</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                              <mat-label>Casing Material</mat-label>
+                              <mat-select formControlName="casingMaterial">
+                                <!-- <mat-option *ngFor="let food of foods" [value]="food.value">
+                                  {{food.viewValue}}
+                                </mat-option> -->
+                                <mat-option value="Stainless Steel">Stainless Steel</mat-option>
+                                <mat-option value="GI Sheet">GI Sheet</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                              <mat-label>Drain Pan Material</mat-label>
+                              <mat-select formControlName="drainPanMaterial">
+                                <mat-option value="Stainless Steel">Stainless Steel</mat-option>
+                                <mat-option value="GI Sheet">GI Sheet</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                              <mat-label>Eliminator</mat-label>
+                              <mat-select formControlName="eliminator">
+                                <mat-option value="2 Pass PVC">2 Pass PVC</mat-option>
+                                <mat-option value="4 Pass PVC">4 Pass PVC</mat-option>
+                                <mat-option value="2 Pass PVC">2 Pass GI</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                              <mat-label>Coil Qty</mat-label>
+                              <input type="number" formControlName="qty" matInput required>
+                            </mat-form-field>
+                      </div>
+                      </div>
+                      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 border">
+                        <div class="row "><div class="col-8 mt-3"><span class="text-left">Distributors / Headers</span></div><div class="col-4 mt-2">
+                          <a mat-icon-button color="primary" class="float-right " aria-label="Add Supply Section"
+                                    (click)="addCoilDistributorFormGroupClick(i)" [disabled]="selectedCoilType[i].value.coilType.Name == 'WATER COOLING COIL' ? true : false">
+                                    <mat-icon>add</mat-icon>
+                                </a></div></div>
+                                <div class="mt-4 " style="height: 250px; overflow-x:hidden ;overflow-y: auto !important; ">
+                        <div formArrayName="distributors"
+                          *ngFor="let distributors of coils.controls.distributors.controls; let j = index" [hidden]="selectedCoilType[i].value.coilType.Name == 'WATER COOLING COIL' ? true : false">
+                        <div class="row text-center" [formGroupName]="j">
+                          <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <mat-label>Inlet</mat-label>
+                            <mat-select formControlName="inlet">
+                              <mat-option *ngFor="let food of foods" [value]="food.value">
+                                {{food.viewValue}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <mat-label>Outlet</mat-label>
+                            <mat-select formControlName="outlet">
+                              <mat-option *ngFor="let food of foods" [value]="food.value">
+                                {{food.viewValue}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                        </div>
+                      </div>
+                      </div>
+                    </div>
+                    </div>
+                    
+                    </div>
+                 
+                  <div class="mt-3 f-r">
+                      <button mat-flat-button color="accent" class="mr-3" mat-button matStepperPrevious>Back</button>
+                      <button [disabled]="ahuSpec.get('coilForm').invalid" mat-flat-button color="accent" mat-button matStepperNext>Next</button>
+                  </div>
+                  </form>
+
+          </mat-step>
+
+          <mat-step [stepControl]="filterForm" label="Filter">
+            <form formGroupName="filterForm">
+              <div class="container-fluid justify-content-center border mt-3"
+                    style="border-color: darkgray; border-radius: 0.5em;">
+                    <div class="mt-2"><span class="text-left">Filters</span>
+                      <a mat-button color="primary" aria-label="Add Supply Section" class="float-right" (click)="addFilterFormGroupClick()">
+                        Add Filter
+                      </a></div>
+                    <div class="row text-center justify-content-center">
+                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                          <div formArrayName="filters"
+                          *ngFor="let filters of ahuSpec.controls.filterForm.get('filters')['controls']; let i = index" >
+                          <h5 class="text-center">{{i+1}}<span *ngIf="i+1 == 1"><sup>st</sup></span>
+                            <span *ngIf="i+1 == 2"><sup>nd</sup></span>
+                            <span *ngIf="i+1 == 3"><sup>rd</sup></span>
+                            <span *ngIf="i+1 > 3"><sup>th</sup></span> Filtration</h5>
+                        <div class="row" [formGroupName]="i" >
+                          <div class="col">
+                            <div class="row justify-content-center text-center">
+                              <mat-form-field appearance="outline" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 align-middle">
+                                <mat-label>Filter Type</mat-label>
+                                <mat-select formControlName="type" (valueChange) = "fanmodelChange(i)">
+                                  <mat-option *ngFor="let item of filterType" [value]="item">
+                                    {{item}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                              <mat-form-field appearance="outline" class="col-xs-4 col-sm-4 col-md-3 col-lg-3 align-middle">
+                                <mat-label>Casing Material</mat-label>
+                                <mat-select formControlName="casingMaterial">
+                                  <mat-option *ngFor="let item of filterCasing" [value]="item">
+                                    {{item.Name}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                              <a mat-button color="primary" aria-label="Add Supply Section" class="col-xs-4 col-sm-4 col-md-2 col-lg-2 align-middle mt-1" style="height:50%" (click)="addFilterSizesFormGroupClick(i);">
+                        Add Size
+                              </a>
+                            </div>
+                            <div class="col">
+                              <div formArrayName="sizes"
+                          *ngFor="let sizes of filters.controls.sizes.controls; let j = index">
+                            <div class="row justify-content-center text-center" [formGroupName]="j">
+                              <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 align-middle">
+                                <mat-label>Filter Size</mat-label>
+                                <mat-select formControlName="size">
+                                  <mat-option *ngFor="let food of foods" [value]="food.value">
+                                    {{food.viewValue}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                              <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 align-middle">
+                                <mat-label>Qty</mat-label>
+                                <input type="number" formControlName="qty" matInput required>
+                              </mat-form-field>
+                            </div>
+                            </div>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                      </div>
+                      </div>
+                    </div>
+                     <div class="mt-3 f-r">
+                      <button mat-flat-button color="accent" class="mr-3" mat-button matStepperPrevious>Back</button>
+                      <button mat-flat-button color="accent" mat-button matStepperNext [disabled]="ahuSpec.get('filterForm').invalid">Next</button>
+                  </div>
+            </form>
+          </mat-step>
+
+          <mat-step  label="Other Components">
+            <p>You are now done.</p>
+              <div class="mt-3 f-r">
+                
+                <!-- <button mat-flat-button color="accent" class="mr-3" mat-button (click)="stepper.reset()">Reset</button> -->
+                <button mat-flat-button color="accent" class="mr-3" mat-button matStepperPrevious>Back</button>
+                <button mat-flat-button color="accent" mat-button (click)="onSubmit(ahuSpec.value)" [disabled]="!ahuSpec.valid">Generate BOM</button>
+
+                <!-- <button mat-flat-button color="accent" (click)="onSubmit(ahuSpec.value)" type="button" >Next</button> -->
+
+              </div>
+          </mat-step>
+
+          </mat-horizontal-stepper>
+
+          </div>
+        </div>
+
+      </mat-card>
+    </div>
+  </div>
+</form>
+</div>

@@ -1,0 +1,241 @@
+.datalist {
+  height:50px !important;
+ max-height:80px !important;
+ overflow-y:auto;
+ display:relative !important;
+}
+.cc-selector input{
+    margin:0;padding:0;
+    -webkit-appearance:none;
+      -moz-appearance:none;
+            appearance:none;
+}
+.cc-selector-2 input{
+    position:absolute;
+    z-index:999;
+}
+.cc-selector input:active +.drinkcard-cc{opacity: .9;}
+.cc-selector input:checked +.drinkcard-cc{
+    -webkit-filter: none;
+      -moz-filter: none;
+            filter: none;
+}
+.cc-selector-2 input{ margin: 5px 0 0 12px; }
+.cc-selector-2 label{ margin-left: 7px; }
+.ccwtop{background-image: url('/assets/img/CCW-TOP.svg');}
+.cwside{background-image: url('/assets/img/CW-TOP-HORIZONTAL.svg');}
+.ccwside{background-image: url('/assets/img/CCW-BOTTOM-HORIZONTAL.svg');}
+.cwtop{background-image: url('/assets/img/CW-TOP.svg');}
+.drinkcard-cc{
+    cursor:pointer;
+    background-size:contain;
+    background-repeat:no-repeat;
+    display:inline-block;
+    width:100px;height:100px;
+    -webkit-transition: all 100ms ease-in;
+      -moz-transition: all 100ms ease-in;
+            transition: all 100ms ease-in;
+    -webkit-filter: brightness(1.8) grayscale(1) opacity(.7);
+      -moz-filter: brightness(1.8) grayscale(1) opacity(.7);
+            filter: brightness(1.8) grayscale(1) opacity(.7);
+}
+.drinkcard-cc:hover{
+    -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
+      -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
+            filter: brightness(1.2) grayscale(.5) opacity(.9);
+}
+
+.cc-selector-motor input{
+  margin:0;padding:0;
+  -webkit-appearance:none;
+     -moz-appearance:none;
+          appearance:none;
+}
+.cc-selector-2 input{
+  position:absolute;
+  z-index:999;
+}
+.cc-selector-motor input:active +.drinkcard-cc-motor{opacity: .9;}
+.cc-selector-motor input:checked +.drinkcard-cc-motor{
+  -webkit-filter: none;
+     -moz-filter: none;
+          filter: none;
+}
+.cc-selector-2-motor input{ margin: 5px 0 0 12px; }
+.cc-selector-2-motor label{ margin-left: 7px; }
+.backcwside{background-image: url('/assets/img/motor-back.svg');}
+.side1cwside{background-image: url('/assets/img/motor-side1.svg');}
+.side2cwside{background-image: url('/assets/img/motor-side2.svg');}
+.backccwside{background-image: url('/assets/img/motor-back-ccwside.svg');}
+.side1ccwside{background-image: url('/assets/img/motor-side1-ccwside.svg');}
+.side2ccwside{background-image: url('/assets/img/motor-side2-ccwside.svg');}
+.backcwtop{background-image: url('/assets/img/motor-back-cwtop.svg');}
+.side1cwtop{background-image: url('/assets/img/motor-side1-cwtop.svg');}
+.side2cwtop{background-image: url('/assets/img/motor-side2-cwtop.svg');}
+.backccwtop{background-image: url('/assets/img/motor-back-ccwtop.svg');}
+.side1ccwtop{background-image: url('/assets/img/motor-side1-ccwtop.svg');}
+.side2ccwtop{background-image: url('/assets/img/motor-side2-ccwtop.svg');}
+.drinkcard-cc-motor{
+  cursor:pointer;
+  background-size:contain;
+  background-repeat:no-repeat;
+  display:inline-block;
+  width:130px;height:100px;
+  -webkit-transition: all 100ms ease-in;
+     -moz-transition: all 100ms ease-in;
+          transition: all 100ms ease-in;
+  -webkit-filter: brightness(1.8) grayscale(1) opacity(.7);
+     -moz-filter: brightness(1.8) grayscale(1) opacity(.7);
+          filter: brightness(1.8) grayscale(1) opacity(.7);
+}
+.drinkcard-cc-motor:hover{
+  -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
+     -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
+          filter: brightness(1.2) grayscale(.5) opacity(.9);
+}
+.page-inner{
+padding-top: 50px;
+width: 1200px;
+margin: auto;
+
+}
+.page-inner-bom{
+  padding-top: 35px;
+  width: 100%;
+  height: 85%;
+  margin: 0 auto;
+
+  }
+.modal-project-list {
+  display: block; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 50px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  margin: auto;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content-project-list {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  overflow: auto; /* Enable scroll if needed */
+  width: 1200px;
+}
+
+/* The Close Button */
+.close-project-list {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-project-list:hover,
+.close-project-list:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Remove default bullets */
+ul, #myUL {
+  list-style-type: none;
+}
+
+/* Remove margins and padding from the parent ul */
+#myUL {
+  margin: 0;
+  padding: 0;
+}
+
+/* Style the caret/arrow */
+.caret {
+  cursor: pointer;
+  user-select: none; /* Prevent text selection */
+}
+
+/* Create the caret/arrow with a unicode, and style it */
+.caret::before {
+  content: "+";
+  color: black;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+.caret-down::before {
+  content: "-";
+}
+
+/* Hide the nested list */
+.nested {
+  display: none;
+}
+
+/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+.active {
+  display: block;
+}
+
+.textLoading {
+  color: #0d6efd;
+  font-weight: bold;
+  display: inline-block;
+  margin-left: 5px;
+}
+.bounceball {
+  position: relative;
+  display: inline-block;
+  height: 37px;
+  width: 15px;
+}
+.bounceball:before {
+  position: absolute;
+  content: '';
+  display: block;
+  top: 0;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #0d6efd;
+  transform-origin: 50%;
+  animation: bounce 500ms alternate infinite ease;
+}
+@keyframes bounce {
+  0% {
+    top: 30px;
+    height: 5px;
+    border-radius: 60px 60px 20px 20px;
+    transform: scaleX(2);
+ }
+  35% {
+    height: 15px;
+    border-radius: 50%;
+    transform: scaleX(1);
+ }
+  100% {
+    top: 0;
+ }
+}
+
+legend{
+  position: absolute;
+  left: 0;
+  box-sizing: content-box;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+@media screen and (min-height:1080px) {
+
+}

@@ -1,0 +1,430 @@
+<div class=" page-inner d-flex justify-content-center">
+<div class="row">
+
+  <div class="col border container-fluid">
+    <div class="row  justify-content-center">
+      <ng-container *ngIf="projectWindow == true">
+      <div  class="col modal-project-list ">
+        <div class="modal-content-project-list">
+          <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Project Lists</h5>
+          <button type="button" class="close" (click) = "closeProjects()">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col py-1 px-md-2  col-4 col-md-4">
+              <div class="card  " style="width: auto;">
+                <div class="card-body">
+                  <h5 class="card-title text-center align-middle">Jobs</h5>
+                  <hr>
+                  <ul id="myUL">
+                    <li><span class="caret blockquote">Job Ref</span>
+                      <ul class="nested">
+                        <li>Water</li>
+                        <li>Coffee</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col py-1 px-md-2  col-4 col-md-4">
+              <div class="card align-middle text-center" style="width: auto;">
+                <div class="card-body">
+                  <h5 class="card-title">Selections</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col py-1 px-md-2  col-4 col-md-4">
+              <div class="card align-middle text-center" style="width: auto;">
+                <div class="card-body">
+                  <h5 class="card-title">Project Details</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      </ng-container>
+      <div class="col">
+
+        <div class="row bg-success text-white">
+          <div class="col py-2 px-md-4 border-bottom col-10 col-md-10 mx-auto"><h4>Belt Drive Designer</h4></div>
+          <div class="col py-2 px-md-4 border-bottom col-2 col-md-2 mx-auto"><button type="button" class="btn btn-outline-light btn-block" (click) = openProjects()>View Projects</button></div>
+
+        </div>
+        <div class="row">
+          <ng-container *ngIf="newProjectDetails == null">
+          <div class="col py-3 px-md-5 border-bottom col-12 col-md-12 mx-auto">
+            <form #projectInfoForm = "ngForm" (ngSubmit)="projectDetails(projectInfoForm.value);">
+              <div class="row">
+                <div class="col-3">
+                  <div class="form-group">
+                    <label for="projectName">Project Name</label>
+                    <input type="text" [(ngModel)]="projectName" name="projectName" id="projectName" class="form-control" required>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="jobRef">Job Ref</label>
+                    <input type="number" [(ngModel)]="jobRef" name="jobRef" id="jobRef" class="form-control"  required>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="selectionDate">Selection Date</label>
+                    <input type="date" [(ngModel)]="selectionDate" name="selectionDate" id="selectionDate" class="form-control" value="{{selectionDate | date}}"  required>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="serialNum">Serial No.</label>
+                    <input type="number" [(ngModel)]="serialNum" name="serialNum" id="serialNum" class="form-control"  required>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="revNum">Revision No.</label>
+                    <input type="number" [(ngModel)]="revNum" name="revNum" id="revNum" class="form-control" required>
+                  </div>
+                </div>
+                <div class="col-1">
+                  <div class="form-group">
+                    <label></label>
+                  <button type="submit" class="btn btn-outline-primary btn-block"><i class="fas fa-plus"></i></button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="newProjectDetails != null">
+          <div class="col py-3 px-md-5 border-bottom col-12 col-md-12 mx-auto">
+              <div class="row">
+                <div class="col-3">
+                  <div class="form-group">
+                    <label for="projectName">Project Name</label>
+                    <h5>{{newProjectDetails.projectName}}</h5>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="jobRef">Job Ref</label><h5>{{newProjectDetails.jobRef}}</h5>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="selectionDate">Selection Date</label><h5>{{newProjectDetails.selectionDate | date}}</h5>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="serialNum">Serial No.</label><h5>{{newProjectDetails.serialNum}}</h5>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="revNum">Revision No.</label><h5>{{newProjectDetails.revNum}}</h5>
+                  </div>
+                </div>
+                <div class="col-1">
+                  <div class="form-group">
+                    <label></label>
+                  <button type="button" class="btn btn-outline-primary btn-block"><i class="far fa-edit"></i></button>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </ng-container>
+        </div>
+        <form #beltCalcForm = "ngForm" (ngSubmit)="calculate(beltCalcForm.value)">
+        <div class="row">
+          <div class="col py-1 px-md-2  col-6 col-md-6">
+            <div class="card align-middle text-center" style="width: auto;">
+              <div class="card-body">
+                <h5 class="card-title">Fan Orientation - {{selected_FanOrientation.text}}</h5>
+                    <div class="cc-selector">
+                      <ul class="list-inline" >
+                        <li class="list-inline-item" *ngFor="let item of fanOrientations"><input type="radio" [(ngModel)]="fanOrientaion"  name="fanOrientation" id="{{item.code}}"  [value]="item.value" (change)= 'selectedFanOrientation(item)' [checked]="item.value" required>
+                          <label class="drinkcard-cc {{item.code}}" for="{{item.code}}"></label></li>
+                      </ul>
+                    </div>
+              </div>
+            </div>
+          </div>
+          <div class="col py-1 px-md-2  col-6 col-md-6">
+            <div class="card align-middle text-center" style="width: auto;">
+              <div class="card-body">
+                <h5 class="card-title">Motor Position for {{selected_FanOrientation.text}} - {{selected_motorPosition.text}}</h5>
+                    <div class="cc-selector-motor">
+                      <ul class="list-inline" >
+                        <li class="list-inline-item" *ngFor="let item of motorPositions"><input type="radio" [(ngModel)]="motorPosition"  name="motorPosition" id="{{item.code}}"  [value]="item.value" (change)= 'selectedMotorPosition(item)' [checked]="item.value" required>
+                          <label class="drinkcard-cc-motor {{item.code}}" for="{{item.code}}"></label></li>
+                      </ul>
+                    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col py-1 px-md-2  col-6 col-md-6">
+            <div class="row">
+              <div class="col-6">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>AHU Tag</mat-label>
+                  <input type="text" [(ngModel)]="ahuTag" name="ahuTag" id="ahuTag" matInput required>
+                </mat-form-field>
+                <!-- <div class="form-group">
+                  <label for="ahuTag">AHU Tag</label>
+                  <input type="text" [(ngModel)]="ahuTag" name="ahuTag" id="ahuTag" class="form-control"  required>
+                </div> -->
+              </div>
+              <!-- <div class="col-6">
+                <div class="form-group">
+                    <label  for="fanType">Fan Type</label>
+                  <select [(ngModel)]="fanType" name="fanType" id="fanType" class="form-select" required>
+                    <option *ngFor="let item of fanTypes" [value]= 'item.value' > {{item.text}}</option>
+                  </select>
+                </div>
+              </div> -->
+              <div class="col-6">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Fan Model</mat-label>
+                  <mat-select [(ngModel)]="fanModel" name="fanModel"  placeholder="Fan Model" #singleSelect (selectionChange) = 'getFanData()' required>
+                    <mat-option>
+                      <ngx-mat-select-search *ngIf="true" [formControl]="fanModelFiltrCtrl" [preventHomeEndKeyPropagation]="true">
+                        <mat-icon ngxMatSelectSearchClear>delete</mat-icon>
+                      </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let item of filteredfanModel | async" [value]="item.FAN_SIZE">
+                      {{item.FAN_SIZE}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <!-- <div class="form-group">
+                    <label  for="fanModel">Fan Model</label>
+                    <input type="text" [(ngModel)]="fanModel" name="fanModel" list="fanModelList" (keyup)="getFanData()"  [className]="fanModelError != '' ? 'form-control is-invalid' : 'form-control is-valid'" required>
+                  <datalist id="fanModelList" class="datalist">
+                    <option *ngFor="let item of fanData" [value]= 'item.FAN_SIZE'> {{item.FAN_SIZE}}</option>
+                  </datalist>
+                  <div class="invalid-feedback">
+                    {{fanModelError}}
+                  </div>
+                </div> -->
+              </div>
+              <div class="col-6">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Fan Speed (RPM)</mat-label>
+                  <input type="number" [(ngModel)]="fanSpeed" name="fanSpeed" id="fanSpeed" matInput required>
+                </mat-form-field>
+                <!-- <div class="form-group">
+                  <label for="fanSpeed">FAN Speed (RPM)</label>
+                  <input type="number" [(ngModel)]="fanSpeed" name="fanSpeed" id="fanSpeed" class="form-control"  required>
+                </div> -->
+              </div>
+              <div class="col-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Fan Pulley</mat-label>
+                  <mat-select [(ngModel)]="fanPulley" name="fanPulley"  placeholder="Fan Pulley" #singleSelect (selectionChange) = 'getFanPulleyData()' required>
+                    <mat-option>
+                      <ngx-mat-select-search *ngIf="true" [formControl]="PulleyFiltrCtrl" [preventHomeEndKeyPropagation]="true">
+                        <mat-icon ngxMatSelectSearchClear>delete</mat-icon>
+                      </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let item of filteredpulley | async" [value]="item.CODE">
+                      {{item.CODE}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <!-- <div class="form-group">
+                    <label  for="fanPulley">Fan Pulley</label>
+                    <input type="text" [(ngModel)]="fanPulley" name="fanPulley" list="fanPulleyList" (keyup) = "getFanPulleyData()" [className]="fanPulleyError != '' ? 'form-control is-invalid' : 'form-control is-valid'" required>
+                  <datalist id="fanPulleyList" class="datalist">
+                    <option *ngFor="let item of pulleyList" value="{{item.CODE}}">{{item.CODE}}</option>
+                  </datalist>
+                  <div class="invalid-feedback">
+                    {{fanPulleyError}}
+                  </div>
+                </div> -->
+              </div>
+            </div>
+          </div>
+          <div class="col py-1 px-md-2  col-6 col-md-6">
+            <div class="row">
+              <div class="col-4">
+                <mat-form-field appearance="outline">
+                  <mat-label>Motor Model</mat-label>
+                  <mat-select [(ngModel)]="motorModel" name="motorModel"  placeholder="Motor Model" #singleSelect (selectionChange) = 'getMotorData()' required>
+                    <mat-option>
+                      <ngx-mat-select-search *ngIf="true" [formControl]="motorModelFiltrCtrl" [preventHomeEndKeyPropagation]="true">
+                        <mat-icon ngxMatSelectSearchClear>delete</mat-icon>
+                      </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let item of filteredMotorModel | async" [value]="item.FRAMESIZE">
+                      {{item.FRAMESIZE}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <!-- <div class="form-group">
+                    <label  for="motorModel">Motor Model</label>
+                    <input type="text" [(ngModel)]="motorModel" name="motorModel" list="motorModelList" (keyup)='getMotorData()' class="form-control" [className]="motorModelError != '' ? 'form-control is-invalid' : 'form-control is-valid'" required>
+                  <datalist id="motorModelList" class="datalist">
+                    <option *ngFor="let item of MOTOR_DIMS" [value]= 'item.FRAMESIZE'>{{item.FRAMESIZE}}</option>
+                  </datalist>
+                  <div class="invalid-feedback">
+                    {{motorModelError}}
+                  </div>
+                </div> -->
+  <!-- <mat-form-field class="example-full-width" appearance="outline">
+
+    <mat-label>Motor Model</mat-label>
+    <input type="text"
+           placeholder="Motor Model"
+           [(ngModel)]="motorModel" name="motorModel"
+           matInput
+           [formControl]="myControl"
+           [matAutocomplete]="auto" >
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" >
+      <mat-option *ngFor="let option of filteredMotorModel | async" [value]="option">
+        {{option.FRAMESIZE}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field> -->
+              </div>
+              <div class="col-4">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Motor Speed (RPM)</mat-label>
+                    <input type="number" [(ngModel)]="motorSpeed" name="motorSpeed" id="motorSpeed" matInput required>
+                  </mat-form-field>
+              </div>
+              <!-- <div class="col-4">
+                <div class="form-group">
+                    <label  for="motorPulley">Motor Pulley</label>
+                    <input type="text" [(ngModel)]="motorPulley" name="motorPulley" list="motorPulleyList" (keyup) = "getMotorPulleyData()" [className]="motorPulleyError != '' ? 'form-control is-invalid' : 'form-control is-valid'" required>
+                  <datalist id="motorPulleyList" class="datalist">
+                    <option *ngFor="let item of pulleyList" value="{{item.CODE}}">{{item.CODE}}</option>
+                  </datalist>
+                  <div class="invalid-feedback">
+                    {{motorPulleyError}}
+                  </div>
+                </div>
+              </div> -->
+            </div>
+            <div class="row ">
+              <div class="col-4">
+                <mat-form-field appearance="outline">
+                  <mat-label>Motor Pulley</mat-label>
+                  <mat-select [(ngModel)]="motorPulley" name="motorPulley"  placeholder="Motor Pulley" #singleSelect (selectionChange) = 'getMotorPulleyData()' required>
+                    <mat-option>
+                      <ngx-mat-select-search *ngIf="true" [formControl]="PulleyFiltrCtrl" [preventHomeEndKeyPropagation]="true">
+                        <mat-icon ngxMatSelectSearchClear>delete</mat-icon>
+                      </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let item of filteredpulley | async" [value]="item.CODE">
+                      {{item.CODE}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <!-- <mat-form-field appearance="outline">
+                  <mat-label>Critical Height</mat-label>
+                  <input type="number" [(ngModel)]="criticalHeight" name="criticalHeight" id="criticalHeight" matInput [disabled] = "true" required>
+                </mat-form-field> -->
+                <!-- <div class="custom-control custom-checkbox">
+                  <label for="criticalHeight">  Critical Height</label>
+                  <input type="number" [(ngModel)]="criticalHeight" name="criticalHeight" id="criticalHeight" class="form-control" [disabled] = "true">
+                </div> -->
+              </div>
+              <div class="col-8">
+                <br>
+                <button type="submit"  class="col-12" [disabled] = '!beltCalcForm.valid' mat-raised-button color="primary">Calculate</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        </form>
+        <ng-container *ngIf="result">
+          <div class="row" >
+            <div class="col py-1 px-md-2  col-12 col-md-12">
+              <div class="card align-middle" style="width: auto;">
+                <div class="card-body table-responsive ">
+                  <ng-container *ngIf="loading == true">
+                  <div class="loading">
+                    <div class="bounceball"></div>
+                    <div class="textLoading"> CALCULATING</div>
+                  </div>
+                  </ng-container>
+                  <cite>Result : </cite> <span class="text-primary">{{result.ahuTag}}</span>
+                  <hr>
+                  <div class="row">
+                    <div class="col-12">
+                      <table class="display table border">
+                        <tbody>
+                          <!-- <tr>
+                            <td class="border">Project</td><td>{{newProjectDetails.projectName}}</td>
+                            <td class="border">Job Ref</td><td>{{newProjectDetails.jobRef}}</td>
+                            <td class="border">Date</td><td>{{newProjectDetails.selectionDate | date}}</td>
+                            <td class="border">Serial No.</td><td>{{newProjectDetails.serialNum}}</td>
+                            <td class="border">Revision No.</td><td>{{newProjectDetails.revNum}}</td>
+                          </tr> -->
+                          <tr>
+                            <!-- <td><cite>Fan Type</cite> <p class="text-primary">{{result.fanType}}</p></td> -->
+                            <td><cite>Fan Model</cite> <p class="text-primary">{{result.fanModel}} &#8960;</p></td>
+                            <td><cite>Motor Model</cite> <p class="text-primary">{{result.motorModel}}</p></td>
+                            <td><cite>Fan Speed</cite> <p class="text-primary">{{result.fanSpeed}} RPM</p></td>
+                            <td><cite>Motor Speed</cite> <p class="text-primary">{{result.motorSpeed}} RPM</p></td>
+                            <td><cite>Fan Pulley</cite> <p class="text-primary">{{result.fanPulley}}</p></td>
+                            <td><cite>Motor Pulley</cite> <p class="text-primary">{{result.motorPulley}}</p></td>
+                          </tr>
+                          <tr>
+                            <td><cite>Center Distance</cite> <p class="text-primary">{{result.centerDistance}} mm</p></td>
+                            <td><cite>Belt Length</cite> <p class="text-primary">{{result.beltLength}} mm</p></td>
+                            <td >
+                              <div class="form-group">
+                                <cite>Matching Belts</cite>
+                            <select [(ngModel)]="matchingBelts" name="matchingBelts" id="matchingBelts" class="form-select"  required>
+                              <option *ngFor="let item of belts" [value]= 'item.ID' > {{item.Grade}}-{{item.Length}}</option>
+                            </select>
+                          </div>
+                            </td>
+                            <td><cite>No. of Belts</cite> <p class="text-primary">{{result.beltQty}} nos</p></td>
+                            <td><cite>Fan Orientation</cite> <p class="text-primary">{{result.fanOrientaionText}}</p></td>
+                            <td><cite>Motor Position</cite> <p class="text-primary">{{result.motorPositionText}}</p></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="result == null">
+          <div class="row" >
+            <div class="col py-1 px-md-2  col-12 col-md-12">
+              <div class="card align-middle" style="width: auto;">
+                <div class="card-body text-center">
+                  <ng-container *ngIf="loading == true">
+                  <div class="loading">
+                    <div class="bounceball"></div>
+                    <div class="textLoading"> CALCULATING</div>
+                  </div>
+                  </ng-container>
+                  <h6 class="card-title text-danger">{{noresult}}</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+</div>
+</div>
+</div>

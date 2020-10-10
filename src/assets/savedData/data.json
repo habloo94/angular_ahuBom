@@ -1,0 +1,100 @@
+{
+	"customer": "",
+	"project": "",
+	"so_num": "",
+	"location": "",
+	"ahuModel": "",
+	"ahuType": "",
+	"ahuTag": "",
+	"ahuQty": "",
+	"unitForm": {
+		"airVolume": "",
+		"ESP": "",
+		"outerSheet": "",
+		"innerSheet": "",
+		"profileType": "",
+		"panelThick": "",
+		"insulation": "",
+		"baseType": "",
+		"baseHeight": "",
+		"baseThick": "",
+		"supplyDimension": [
+			{
+				"length": "",
+				"width": "",
+				"height": ""
+			}
+		],
+		"exhaustDimension": [
+			{
+				"length": "",
+				"width": "",
+				"height": ""
+			}
+		]
+	},
+	"fanForm": {
+		"supplyFan": {
+			"fanModel": "",
+			"fanQty": "",
+			"motorModel": "",
+			"motorQty": "",
+			"totalQty": "",
+			"antiVibrant": "",
+			"fanPulley": "",
+			"motorPulley": "",
+			"belt": ""
+		},
+		"exhaustFan": {
+			"fanModel": "",
+			"fanQty": "",
+			"motorModel": "",
+			"motorQty": "",
+			"totalQty": "",
+			"antiVibrant": "",
+			"fanPulley": "",
+			"motorPulley": "",
+			"belt": ""
+		}
+	},
+	"coilForm": {
+		"coils": [
+			{
+				"coilType": "",
+				"finHeight": "",
+				"finLength": "",
+				"rowDeep": "",
+				"fpi": "",
+				"circuit": "",
+				"tubeDia": "",
+				"finMaterial": "",
+				"tubeMaterial": "",
+				"headerMaterial": "",
+				"casingMaterial": "",
+				"drainPanMaterial": "",
+				"eliminator": "",
+				"qty": "",
+				"distributors": [
+					{
+						"inlet": "",
+						"outlet": ""
+					}
+				]
+			}
+		]
+	},
+	"filterForm": {
+		"filters": [
+			{
+				"type": "",
+				"casingMaterial": "",
+				"sizes": [
+					{
+						"size": "",
+						"qty": ""
+					}
+				]
+			}
+		]
+	}
+}
