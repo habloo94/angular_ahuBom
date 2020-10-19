@@ -5,6 +5,8 @@ import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
+import { SlideToggleModule } from 'ngx-slide-toggle';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FanComponent } from './components/fan/fan.component';
@@ -62,7 +64,8 @@ import { ItemGroupFilterPipe } from './shared/pipes/itemGroup.pipe';
     MatTableModule,
     MatButtonToggleModule,
     HttpClientModule,
-    MatStepperModule
+    MatStepperModule,
+    SlideToggleModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

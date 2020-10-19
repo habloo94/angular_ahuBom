@@ -75,7 +75,7 @@ export class BackendService {
 
     // getCalculation(data){
     //   return new Promise((resolve,reject) => {
-    //        this.http.post(url+'casingCalc',data).subscribe(postdata => {
+    //        this.http.get(url+'casingCalc',data).subscribe(postdata => {
     //          resolve(postdata);
     //        }, err => {
     //          console.log(err);

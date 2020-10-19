@@ -15,6 +15,7 @@ import { take, takeUntil } from 'rxjs/operators';
 import * as XLSX from 'xlsx';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { saveAs } from 'file-saver';
+import { url } from '../../config';
 
 interface Food {
   value: string;
@@ -31,6 +32,13 @@ interface Food {
 
 export class BomComponent extends Data implements OnInit {
 
+  name = 'slideToggle';
+  id = 'materialSlideToggle';
+  checked = false;
+  disabled = false;
+  label = 'Toggle On/Off';
+  labelledby = 'Some Other Text';
+
 @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
 
    isLinear = true;
@@ -39,6 +47,7 @@ export class BomComponent extends Data implements OnInit {
   coilForm: FormGroup;
   filterForm: FormGroup;
   FifthFormGroup: FormGroup;
+  wasClicked = false;
 
 protected _onDestroy = new Subject<void>();
 
@@ -283,7 +292,18 @@ protected _onDestroy = new Subject<void>();
     //   secondCtrl: ['', Validators.required]
     // });
   
+  }
 
+
+  onChange(value1: boolean) {
+    console.log("clicked by togglr value");
+    this.wasClicked = !this.wasClicked
+    var length = this.ahuSpec.controls.unitForm.get('exhaustDimension').value.length;
+    if(value1 == true && length == 0){
+      this.addExhaustSectionFormGroupClick();
+    }else if(value1 == false){
+      this.removeExhaustSectionFormGroupClick1(length);
+    }
   }
 
   fanmodelChange(i){
@@ -303,6 +323,11 @@ protected _onDestroy = new Subject<void>();
   }
   removeExhaustSectionFormGroupClick(i: number): void {
     (this.ahuSpec.controls.unitForm.get('exhaustDimension') as FormArray).removeAt(i);
+  }
+  removeExhaustSectionFormGroupClick1(length: number): void {
+    for(var i =0;i<length;i++){
+      (this.ahuSpec.controls.unitForm.get('exhaustDimension') as FormArray).removeAt(i);
+    }
   }
   addCoilFormGroupClick(): void{
     (this.ahuSpec.controls.coilForm.get('coils') as FormArray).push(this.addCoilFormGroup());
@@ -428,31 +453,65 @@ protected _onDestroy = new Subject<void>();
 
   onSubmit(formData){
     console.log(formData,"formdata");
+
+          // ORIGIANAL
+     if(this.ahuSpec.invalid){
+          return false;
+      }
+    console.log(formData,"formdata");
+    this.calc = this.backendservice.getCalculation(formData);
+    console.log(this.calc,"this.calc");
+    this.calc.subscribe(result => {
+      this.calcResult = result;
+      console.log(result);
+      const headers = new HttpHeaders({ 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+      this.http.get(url+'download', { headers, responseType: 'blob' }).toPromise().then(blob => {
+          console.log('running');
+          saveAs(blob, 'BOM.xlsx');
+      }).catch(err => console.error('download error = ', err));
+    });
+    // return false;
     // this.calc = this.backendservice.getCalculation(formData);
     // console.log(this.calc,"this.calc");
     // this.calc.subscribe(result => {
       // this.calcResult = result;
       // console.log(result);
-      const headers = new HttpHeaders({ 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','Access-Control-Allow-Origin': '*' })
-      this.http.post('http://localhost:3200/casingCalc',formData, { headers, responseType: 'blob' }).toPromise().then(blob => {
-          console.log('running');
-          saveAs(blob, 'BOM.xlsx');
-      }).catch(err => console.error('download error = ', err));
+      // const headers = new HttpHeaders({ 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})
+     
+      // this.http.post('http://localhost:3200/casingCalc',formData, { responseType: 'blob' }).toPromise().then(data => {
+      //     console.log('running');
+      //     let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      //     saveAs(blob, 'BOM.xlsx');
+      // })
+
     // });
 
-
-    // console.log(formData,"formdata");
     // this.calc = this.backendservice.getCalculation(formData);
     // console.log(this.calc,"this.calc");
     // this.calc.subscribe(result => {
     //   this.calcResult = result;
     //   console.log(result);
-    //   const headers = new HttpHeaders({ 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
-    //   this.http.get('/api/download', { headers, responseType: 'blob' }).toPromise().then(blob => {
-    //       console.log('running');
-    //       saveAs(blob, 'BOM.xlsx');
-    //   }).catch(err => console.error('download error = ', err));
+    //   const headers = new HttpHeaders({ 'Content-Type': 'application/json' })
+    //   this.http.post(url +'casingCalc',formData, { headers, responseType: 'blob' }).toPromise().then(response_calc => {
+    //       console.log(response_calc);
+    //       var file = new Blob([response_calc], { 
+    //         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' 
+    //     });
+    //       saveAs(file,"BOM_CALC"+".xlsx");
+
+    //   this.http.get('http://localhost:3200/download',{ responseType: 'blob' }).toPromise().then(response => {
+    //     var file = new Blob([response], { 
+    //         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' 
+    //     });
+    //       saveAs(file,"BOM"+".xlsx");
+
+    //     })
+    //       //saveAs(blob, 'BOM.xlsx');
+    //   })
     // });
+
+
+  
 
 
     ///demfkegnk

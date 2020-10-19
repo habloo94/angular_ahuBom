@@ -230,18 +230,50 @@
                                 </div>
                               </div>
                             </div>
+
+
+
                             <div class="col-6 col-sm-6 justify-content-center">
                               <div class="row mt-1 mb-0 border-bottom">
                                 <div class="col-xs-6 col-sm-6 col-md-9 col-lg-9">
-                                  <h6>Exhaust</h6>
+                                  <span>
+                                       <!--   <material-slide-toggle  *ngIf="product.is_active == '1'"
+                            [checked]="true" 
+                            (change)="onChange($event,product.customer_id)">
+                            </material-slide-toggle>
+                            <material-slide-toggle  *ngIf="product.is_active == '2'"
+                            [checked]="false" 
+                            (change)="onChange($event,product.customer_id)">
+                            </material-slide-toggle>  -->
+
+                                 <!--    <material-slide-toggle  
+                                  [checked]="true" >
+                                  </material-slide-toggle>
+                                  <material-slide-toggle 
+                                  [checked]="false" >
+                                  </material-slide-toggle> -->
+
+                                  <material-slide-toggle 
+                                    [name]="name" 
+                                    [id]="id" 
+                                    [checked]="checked" 
+                                    [disabled]="disabled" 
+                                    [aria-label]="label" 
+                                    [aria-labelledby]="labelledby"
+                                    (change)="onChange($event)">
+                                </material-slide-toggle>
+                                
+                                  </span><span>Exhaust</span>
                                 </div>
-                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-right">
+                                <div *ngIf="wasClicked" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-right">
                                   <a mat-icon-button color="primary" aria-label="Add Supply Section"
                                     (click)="addExhaustSectionFormGroupClick()">
                                     <mat-icon>add</mat-icon>
-                                </a></div>
+                                  </a>
+                                </div>
                               </div>
-                              <div formArrayName="exhaustDimension"
+                              <div *ngIf="wasClicked">
+                              <div  formArrayName="exhaustDimension"
                                 *ngFor="let supplyDimension of ahuSpec.controls.unitForm.get('exhaustDimension')['controls']; let i = index">
                                 <div [formGroupName]="i" class="row">
                                   <div><cite>Section {{i+1}}</cite><a mat-icon-button color="primary" class="float-right" aria-label="Add Supply Section"
@@ -262,13 +294,14 @@
                                   </mat-form-field>
                                 </div>
                               </div>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  <div class="f-r mt-3">
-                    <button [disabled]="ahuSpec.get('unitForm').invalid ||
+
+                   <!--  <button [disabled]="ahuSpec.get('unitForm').invalid ||
                                         ahuSpec.get('customer').invalid || 
                                         ahuSpec.get('project').invalid ||
                                         ahuSpec.get('so_num').invalid ||
@@ -276,8 +309,51 @@
                                         ahuSpec.get('ahuModel').invalid ||
                                         ahuSpec.get('ahuType').invalid ||
                                         ahuSpec.get('ahuTag').invalid ||
-                                        ahuSpec.get('ahuQty').invalid"  mat-flat-button color="accent" mat-button matStepperNext>Next</button>
+                                        ahuSpec.get('ahuQty').invalid"  mat-flat-button color="accent" mat-button matStepperNext>Next</button> -->
+                  <div class="f-r mt-3">
+                    <button *ngIf="!wasClicked" [disabled]="ahuSpec.get('unitForm.airVolume').invalid ||
+                    ahuSpec.get('unitForm.ESP').invalid ||
+                    ahuSpec.get('unitForm.outerSheet').invalid ||
+                    ahuSpec.get('unitForm.innerSheet').invalid ||
+                    ahuSpec.get('unitForm.profileType').invalid ||
+                    ahuSpec.get('unitForm.panelThick').invalid ||
+                    ahuSpec.get('unitForm.insulation').invalid ||
+                    ahuSpec.get('unitForm.baseType').invalid ||
+                    ahuSpec.get('unitForm.baseHeight').invalid ||
+                    ahuSpec.get('unitForm.baseThick').invalid ||
+                    ahuSpec.get('unitForm.supplyDimension').invalid ||
 
+                    ahuSpec.get('customer').invalid || 
+                    ahuSpec.get('project').invalid ||
+                    ahuSpec.get('so_num').invalid ||
+                    ahuSpec.get('location').invalid ||
+                    ahuSpec.get('ahuModel').invalid ||
+                    ahuSpec.get('ahuType').invalid ||
+                    ahuSpec.get('ahuTag').invalid ||
+                    ahuSpec.get('ahuQty').invalid" 
+                    mat-flat-button color="accent" mat-button matStepperNext class="mr-2">Next</button>
+
+                    <button *ngIf="wasClicked" [disabled]="ahuSpec.get('unitForm.airVolume').invalid ||
+                    ahuSpec.get('unitForm.ESP').invalid ||
+                    ahuSpec.get('unitForm.outerSheet').invalid ||
+                    ahuSpec.get('unitForm.innerSheet').invalid ||
+                    ahuSpec.get('unitForm.profileType').invalid ||
+                    ahuSpec.get('unitForm.panelThick').invalid ||
+                    ahuSpec.get('unitForm.insulation').invalid ||
+                    ahuSpec.get('unitForm.baseType').invalid ||
+                    ahuSpec.get('unitForm.baseHeight').invalid ||
+                    ahuSpec.get('unitForm.baseThick').invalid ||
+                    ahuSpec.get('unitForm.supplyDimension').invalid ||
+
+                    ahuSpec.get('customer').invalid || 
+                    ahuSpec.get('project').invalid ||
+                    ahuSpec.get('so_num').invalid ||
+                    ahuSpec.get('location').invalid ||
+                    ahuSpec.get('ahuModel').invalid ||
+                    ahuSpec.get('ahuType').invalid ||
+                    ahuSpec.get('ahuTag').invalid ||
+                    ahuSpec.get('ahuQty').invalid ||
+                    ahuSpec.get('unitForm.exhaustDimension').invalid"  mat-flat-button color="accent" mat-button matStepperNext>Next</button>
                   </div>
               </form>
                   

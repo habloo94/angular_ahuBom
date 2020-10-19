@@ -35,3 +35,8 @@
 }
 
 
+::ng-deep .material-switch{
+      margin: 1.24em 0.6em!important;
+}
+
+
