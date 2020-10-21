@@ -21,10 +21,20 @@
     width: 133.33333%;
 }
 
-::ng-deep .mat-horizontal-stepper-header{
-    pointer-events: none !important;
+::ng-deep .material-switch[_ngcontent-mru-c40] > label[_ngcontent-mru-c40]{
+  width:0px!important;
+}
+::ng-deep .material-switch[_ngcontent-pyi-c40]{
+  width:0px!important;
 }
 
+#fan material-slide-toggle .material-switch{
+  width:0px!important;
+} 
+/*::ng-deep .mat-horizontal-stepper-header{
+    pointer-events: none !important;
+}
+*/
 .f-r{
   float: right;
 }
@@ -39,4 +49,10 @@
       margin: 1.24em 0.6em!important;
 }
 
+
+.cus_div{
+    position: absolute;
+    left: 45px!important;
+    width: 92%!important;
+}
 

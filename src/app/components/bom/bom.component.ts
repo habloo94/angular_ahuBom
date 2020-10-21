@@ -39,6 +39,9 @@ export class BomComponent extends Data implements OnInit {
   label = 'Toggle On/Off';
   labelledby = 'Some Other Text';
 
+  name1 = 'slideToggle1';
+  id1 = 'materialSlideToggle1';
+
 @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
 
    isLinear = true;
@@ -48,6 +51,7 @@ export class BomComponent extends Data implements OnInit {
   filterForm: FormGroup;
   FifthFormGroup: FormGroup;
   wasClicked = false;
+  wasClickedFan = false;
 
 protected _onDestroy = new Subject<void>();
 
@@ -306,6 +310,17 @@ protected _onDestroy = new Subject<void>();
     }
   }
 
+  onChange1(value1: boolean) {
+    console.log("clicked by togglr value");
+    this.wasClickedFan = !this.wasClickedFan
+    // var length = this.ahuSpec.controls.unitForm.get('exhaustDimension').value.length;
+    // if(value1 == true && length == 0){
+    //   this.addExhaustSectionFormGroupClick();
+    // }else if(value1 == false){
+    //   this.removeExhaustSectionFormGroupClick1(length);
+    // }
+  }
+
   fanmodelChange(i){
     this.selectedFIlterType = this.ahuSpec.controls.filterForm.get('filters')['controls'][i];
     console.log(this.selectedFIlterType.valueChanges.type);
@@ -452,13 +467,12 @@ protected _onDestroy = new Subject<void>();
   }
 
   onSubmit(formData){
-    console.log(formData,"formdata");
 
           // ORIGIANAL
-     if(this.ahuSpec.invalid){
-          return false;
-      }
-    console.log(formData,"formdata");
+     // if(this.ahuSpec.invalid){
+     //      return false;
+     //  }
+    console.log(formData,"formdata entry in the function");
     this.calc = this.backendservice.getCalculation(formData);
     console.log(this.calc,"this.calc");
     this.calc.subscribe(result => {
